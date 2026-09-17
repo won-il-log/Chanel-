@@ -85,13 +85,12 @@
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.2s, width 0.3s, height 0.3s;
         }
-        .cursor-hover {
-            width: 45px;
-            height: 45px;
-            background-color: #ffffff;
-        }
+        
+        /* Ẩn con trỏ tròn và hiện bàn tay khi tương tác */
+        .hoverable { cursor: pointer; }
+        .cursor-hidden { opacity: 0 !important; }
 
         /* Marquee Animation */
         .marquee-container {
@@ -153,6 +152,8 @@
         }
 
         ::-webkit-scrollbar { width: 0px; }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
     </style>
 </head>
 <body class="selection:bg-chanel-gold selection:text-white">
@@ -168,11 +169,11 @@
     <!-- Custom Cursor -->
     <div class="cursor-dot hidden lg:block" id="cursor"></div>
 
-    <!-- Sidebar Overlay -->
+    <!-- MÀN HÌNH MỜ (Overlay cho tất cả các Menu) -->
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-[60] hidden opacity-0 transition-opacity duration-300 hoverable" onclick="closeAllSidebars()"></div>
     
-    <!-- Sidebar: BỘ SƯU TẬP (Bags) -->
-    <aside id="sidebar" class="fixed top-0 left-0 w-[90vw] md:w-[450px] h-full bg-[#080808] z-[70] transform -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] overflow-y-auto border-r border-white/10">
+    <!-- 1. SIDEBAR: BỘ SƯU TẬP (Menu Trái) -->
+    <aside id="sidebar" class="fixed top-0 left-0 w-[90vw] md:w-[450px] h-full bg-[#080808] z-[70] transform -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] overflow-y-auto sidebar-scroll border-r border-white/10">
         <div class="p-8 flex justify-between items-center border-b border-white/10 sticky top-0 bg-[#080808]/95 backdrop-blur-md z-10">
             <div>
                 <p class="text-[9px] tracking-chanel-widest text-chanel-gold uppercase font-light mb-1">Menu</p>
@@ -180,60 +181,61 @@
             </div>
             <button onclick="closeAllSidebars()" class="text-3xl text-gray-400 hover:text-white transition-colors hoverable font-light">&times;</button>
         </div>
-        <div class="p-8 grid grid-cols-2 gap-6">
-            <!-- Item 1 -->
-            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
-                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
-                    <img src="Tui xach Classic 11.12.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100">
+        <div class="p-8 grid grid-cols-2 gap-x-6 gap-y-10">
+            <div class="group hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm relative">
+                    <img src="Tui xach Classic 11.12.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80">
                 </div>
-                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Classic 11.12</h4>
-                <p class="text-[9px] text-chanel-gold font-light tracking-wider">310,000,000đ</p>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1">Classic 11.12</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider mb-3">310,000,000đ</p>
+                <button onclick="addToCart('Classic 11.12', 310000000, 'Tui xach Classic 11.12.jpg')" class="text-[8px] uppercase tracking-widest border border-white/20 px-3 py-1.5 hover:bg-white hover:text-black transition-colors w-full">Thêm</button>
             </div>
-            <!-- Item 2 -->
-            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
-                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
-                    <img src="Tui xach CHANEL 25 co Mini.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100">
+            <div class="group hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm relative">
+                    <div class="absolute top-2 left-2 bg-red-600 text-white text-[7px] px-1.5 py-0.5 uppercase tracking-widest z-10">Sale</div>
+                    <img src="Tui xach CHANEL 25 co Mini.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80">
                 </div>
-                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Mini Hồng Pastel</h4>
-                <p class="text-[9px] text-chanel-gold font-light tracking-wider">145,000,000đ</p>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1">Mini Hồng Pastel</h4>
+                <p class="text-[9px] text-red-400 font-light tracking-wider mb-3">125,000,000đ</p>
+                <button onclick="addToCart('Mini Hồng Pastel', 125000000, 'Tui xach CHANEL 25 co Mini.jpg')" class="text-[8px] uppercase tracking-widest border border-white/20 px-3 py-1.5 hover:bg-white hover:text-black transition-colors w-full">Thêm</button>
             </div>
-            <!-- Item 3 -->
-            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
-                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
-                    <img src="Tui nap gap co max.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+            <div class="group hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm relative">
+                    <img src="Tui nap gap co max.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 grayscale group-hover:grayscale-0">
                 </div>
-                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Nắp Gập Cỡ Max</h4>
-                <p class="text-[9px] text-chanel-gold font-light tracking-wider">295,000,000đ</p>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1">Nắp Gập Cỡ Max</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider mb-3">295,000,000đ</p>
+                <button onclick="addToCart('Nắp Gập Cỡ Max', 295000000, 'Tui nap gap co max.jpg')" class="text-[8px] uppercase tracking-widest border border-white/20 px-3 py-1.5 hover:bg-white hover:text-black transition-colors w-full">Thêm</button>
             </div>
-            <!-- Item 4 -->
-            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
-                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
-                    <img src="bag-5.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+            <div class="group hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm relative">
+                    <img src="bag-5.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 grayscale group-hover:grayscale-0">
                 </div>
-                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Shopping Tweed</h4>
-                <p class="text-[9px] text-chanel-gold font-light tracking-wider">135,000,000đ</p>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1">Shopping Tweed</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider mb-3">135,000,000đ</p>
+                <button onclick="addToCart('Shopping Tweed', 135000000, 'bag-5.jpg')" class="text-[8px] uppercase tracking-widest border border-white/20 px-3 py-1.5 hover:bg-white hover:text-black transition-colors w-full">Thêm</button>
             </div>
-            <!-- Item 5 -->
-            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
-                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
-                    <img src="Tui nap gap co mini.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+            <div class="group hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm relative">
+                    <img src="Tui nap gap co nho.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 grayscale group-hover:grayscale-0">
                 </div>
-                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Mini Lông Thú</h4>
-                <p class="text-[9px] text-chanel-gold font-light tracking-wider">155,000,000đ</p>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1">Nắp Gập Đen Nhỏ</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider mb-3">140,000,000đ</p>
+                <button onclick="addToCart('Nắp Gập Đen Nhỏ', 140000000, 'Tui nap gap co nho.jpg')" class="text-[8px] uppercase tracking-widest border border-white/20 px-3 py-1.5 hover:bg-white hover:text-black transition-colors w-full">Thêm</button>
             </div>
-            <!-- Item 6 -->
-            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
-                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
-                    <img src="Tui nap gap co nho.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+            <div class="group hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm relative">
+                    <img src="Tui nap gap co nho (4).jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 grayscale group-hover:grayscale-0">
                 </div>
-                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Nắp Gập Đen</h4>
-                <p class="text-[9px] text-chanel-gold font-light tracking-wider">140,000,000đ</p>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1">Họa Tiết Báo</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider mb-3">148,000,000đ</p>
+                <button onclick="addToCart('Họa Tiết Báo', 148000000, 'Tui nap gap co nho (4).jpg')" class="text-[8px] uppercase tracking-widest border border-white/20 px-3 py-1.5 hover:bg-white hover:text-black transition-colors w-full">Thêm</button>
             </div>
         </div>
     </aside>
 
-    <!-- Sidebar: TIN TỨC (News) -->
-    <aside id="newsSidebar" class="fixed top-0 left-0 w-[90vw] md:w-[450px] h-full bg-[#080808] z-[70] transform -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] overflow-y-auto border-r border-white/10">
+    <!-- 2. SIDEBAR: TIN TỨC (Menu Trái) -->
+    <aside id="newsSidebar" class="fixed top-0 left-0 w-[90vw] md:w-[450px] h-full bg-[#080808] z-[70] transform -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] overflow-y-auto sidebar-scroll border-r border-white/10">
         <div class="p-8 flex justify-between items-center border-b border-white/10 sticky top-0 bg-[#080808]/95 backdrop-blur-md z-10">
             <div>
                 <p class="text-[9px] tracking-chanel-widest text-chanel-gold uppercase font-light mb-1">Tin Tức</p>
@@ -242,7 +244,6 @@
             <button onclick="closeAllSidebars()" class="text-3xl text-gray-400 hover:text-white transition-colors hoverable font-light">&times;</button>
         </div>
         <div class="p-8 flex flex-col gap-10">
-            <!-- News Item 1 -->
             <div class="group cursor-pointer hoverable">
                 <div class="w-full aspect-[4/3] bg-white/5 mb-5 overflow-hidden rounded-sm">
                     <img src="Tui xach Classic 11.12.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
@@ -251,7 +252,6 @@
                 <h4 class="font-serif text-xl text-gray-200 mb-3 leading-snug">Bộ Sưu Tập Mùa Xuân 2026 Tại Paris</h4>
                 <span class="text-[10px] uppercase tracking-widest text-gray-500 border-b border-white/20 pb-1 opacity-0 group-hover:opacity-100 transition-opacity font-medium">Đọc thêm</span>
             </div>
-            <!-- News Item 2 -->
             <div class="group cursor-pointer hoverable">
                 <div class="w-full aspect-[4/3] bg-white/5 mb-5 overflow-hidden rounded-sm">
                     <img src="bag-5.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
@@ -263,7 +263,81 @@
         </div>
     </aside>
 
-    <!-- Navigation -->
+    <!-- 3. SIDEBAR: ĐẶT NGAY (Hàng Sale - Menu Phải) -->
+    <aside id="saleSidebar" class="fixed top-0 right-0 w-[90vw] md:w-[450px] h-full bg-[#080808] z-[70] transform translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] overflow-y-auto sidebar-scroll border-l border-white/10">
+        <div class="p-8 flex justify-between items-center border-b border-white/10 sticky top-0 bg-[#080808]/95 backdrop-blur-md z-10">
+            <div>
+                <p class="text-[9px] tracking-chanel-widest text-red-500 uppercase font-light mb-1">Ưu Đãi Đặc Quyền</p>
+                <span class="font-serif italic text-2xl text-white">Mặt Hàng Sale</span>
+            </div>
+            <button onclick="closeAllSidebars()" class="text-3xl text-gray-400 hover:text-white transition-colors hoverable font-light">&times;</button>
+        </div>
+        <div class="p-8 flex flex-col gap-8">
+            <!-- Sale Item 1 -->
+            <div class="flex gap-6 items-center bg-white/5 p-4 rounded-sm hoverable group">
+                <img src="Tui xach CHANEL 25 co Mini.jpg" class="w-24 h-24 object-contain mix-blend-screen group-hover:scale-105 transition-transform">
+                <div class="flex-1">
+                    <h4 class="font-serif text-[15px] text-white mb-1">Mini Hồng Pastel</h4>
+                    <p class="text-[10px] text-gray-500 line-through mb-1">145,000,000đ</p>
+                    <p class="text-[13px] text-red-500 font-medium">125,000,000đ</p>
+                </div>
+                <button onclick="addToCart('Mini Hồng Pastel', 125000000, 'Tui xach CHANEL 25 co Mini.jpg')" class="w-10 h-10 border border-white/20 flex items-center justify-center rounded-full hover:bg-white hover:text-black transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path></svg>
+                </button>
+            </div>
+            <!-- Sale Item 2 -->
+            <div class="flex gap-6 items-center bg-white/5 p-4 rounded-sm hoverable group">
+                <img src="Tui nap gap co nho.jpg" class="w-24 h-24 object-contain mix-blend-screen group-hover:scale-105 transition-transform grayscale">
+                <div class="flex-1">
+                    <h4 class="font-serif text-[15px] text-white mb-1">Nắp Gập Đen Nhỏ</h4>
+                    <p class="text-[10px] text-gray-500 line-through mb-1">140,000,000đ</p>
+                    <p class="text-[13px] text-red-500 font-medium">115,000,000đ</p>
+                </div>
+                <button onclick="addToCart('Nắp Gập Đen Nhỏ', 115000000, 'Tui nap gap co nho.jpg')" class="w-10 h-10 border border-white/20 flex items-center justify-center rounded-full hover:bg-white hover:text-black transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path></svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 4. SIDEBAR: GIỎ HÀNG (Menu Phải) -->
+    <aside id="cartSidebar" class="fixed top-0 right-0 w-[90vw] md:w-[450px] h-full bg-[#080808] z-[70] transform translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] overflow-y-auto sidebar-scroll border-l border-white/10 flex flex-col">
+        <div class="p-8 flex justify-between items-center border-b border-white/10 sticky top-0 bg-[#080808]/95 backdrop-blur-md z-10 shrink-0">
+            <div>
+                <p class="text-[9px] tracking-chanel-widest text-chanel-gold uppercase font-light mb-1">Shopping Bag</p>
+                <span class="font-serif italic text-2xl text-white">Giỏ Hàng Của Bạn</span>
+            </div>
+            <button onclick="closeAllSidebars()" class="text-3xl text-gray-400 hover:text-white transition-colors hoverable font-light">&times;</button>
+        </div>
+        
+        <!-- Cart Items list -->
+        <div id="cartItemsContainer" class="p-8 flex-1 flex flex-col gap-6">
+            <p class="text-gray-500 text-sm font-light italic text-center mt-10">Giỏ hàng đang trống.</p>
+        </div>
+
+        <!-- Checkout Form (Tích hợp Script) -->
+        <div class="p-8 border-t border-white/10 bg-[#0a0a0a] shrink-0">
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-sm text-gray-400">TỔNG CỘNG:</span>
+                <span id="cartTotal" class="font-serif text-xl text-chanel-gold tracking-widest">0đ</span>
+            </div>
+            
+            <form id="checkoutForm" class="flex flex-col gap-4 hoverable">
+                <input type="text" name="name" placeholder="Họ và tên" required class="chanel-input text-[12px]">
+                <input type="tel" name="phone" placeholder="Số điện thoại" required class="chanel-input text-[12px]">
+                <input type="text" name="address" placeholder="Địa chỉ giao hàng" required class="chanel-input text-[12px]">
+                <!-- Hidden input để gom thông tin giỏ hàng gửi về sheet nếu cần -->
+                <input type="hidden" name="cart_details" id="hiddenCartDetails" value="">
+                
+                <button type="submit" id="checkoutBtn" class="mt-4 bg-white text-black uppercase tracking-widest text-[10px] font-bold py-4 px-6 hover:bg-chanel-gold hover:text-white transition-colors duration-300 w-full disabled:opacity-50 disabled:cursor-not-allowed">
+                    Xác Nhận Đặt Hàng
+                </button>
+                <p id="checkoutMessage" class="text-chanel-gold text-[11px] font-light mt-2 hidden tracking-wider text-center">Đặt hàng thành công! Chúng tôi sẽ liên hệ sớm nhất.</p>
+            </form>
+        </div>
+    </aside>
+
+    <!-- HEADER NAVIGATION -->
     <header class="fixed top-0 w-full z-40 mix-blend-difference text-white p-6 lg:p-10 transition-all">
         <div class="max-w-screen-2xl mx-auto flex justify-between items-center">
             
@@ -283,20 +357,20 @@
             
             <!-- Right: Đặt ngay & Giỏ hàng -->
             <div class="flex items-center gap-6 md:gap-8">
-                <button class="text-[9px] tracking-chanel-widest uppercase hoverable border border-white/40 hover:bg-white hover:text-black transition-all px-4 py-2 rounded-full font-medium">Đặt Ngay</button>
-                <div class="text-[10px] tracking-chanel-widest uppercase hoverable opacity-70 hover:opacity-100 transition-opacity font-light flex items-center gap-1.5 cursor-pointer">
+                <button onclick="toggleSaleSidebar()" class="text-[9px] tracking-chanel-widest uppercase hoverable border border-white/40 hover:bg-white hover:text-black transition-all px-4 py-2 rounded-full font-medium">Đặt Ngay</button>
+                <div onclick="toggleCartSidebar()" class="text-[10px] tracking-chanel-widest uppercase hoverable opacity-70 hover:opacity-100 transition-opacity font-light flex items-center gap-1.5 cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     <span class="hidden md:inline">Giỏ hàng</span>
-                    <span class="text-[8px]">(0)</span>
+                    <span class="text-[8px]" id="cartCountDisplay">(0)</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- LEFT BOTTOM HOTLINE BUBBLE (Toggled) -->
+    <!-- GÓC TRÁI DƯỚI: BONG BÓNG FLASH SALE THU GỌN -->
     <div class="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-4">
         
-        <!-- Sale Panel (Hidden by default) -->
+        <!-- Sale Panel (Ẩn mặc định) -->
         <div id="salePanel" class="bg-[#080808]/95 backdrop-blur-md text-white p-4 rounded-xl w-[190px] border border-white/10 shadow-2xl opacity-0 scale-95 pointer-events-none transition-all duration-300 origin-bottom-left">
             <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2.5">
                 <div class="flex items-center gap-2">
@@ -306,7 +380,7 @@
                     </span>
                     <p class="text-[9px] font-medium tracking-[0.2em] uppercase text-gray-300">Hotline</p>
                 </div>
-                <a href="tel:0917790237" class="text-[11px] font-sans tracking-widest hover:text-chanel-gold transition-colors font-light">0917 790 237</a>
+                <a href="tel:0917790237" class="text-[11px] font-sans tracking-widest hover:text-chanel-gold transition-colors font-light hoverable">0917 790 237</a>
             </div>
             
             <div class="text-center mb-3.5">
@@ -322,66 +396,61 @@
             </div>
         </div>
 
-        <!-- Toggle Button for Sale -->
+        <!-- Nút Tròn Nhỏ để Mở Sale -->
         <button onclick="toggleSale()" class="w-12 h-12 bg-[#080808] border border-white/20 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-chanel-gold hover:border-chanel-gold hover:text-black transition-all duration-300 hoverable group relative">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-chanel-gold opacity-30 group-hover:opacity-0"></span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </button>
     </div>
 
-    <!-- RIGHT BOTTOM SOCIAL BUBBLE (Toggled) -->
+    <!-- GÓC PHẢI DƯỚI: BONG BÓNG CONTACT THU GỌN -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
         
-        <!-- Social Panel (Hidden by default) -->
+        <!-- Social Panel (Ẩn mặc định) -->
         <div id="socialPanel" class="flex flex-col gap-3 opacity-0 scale-95 pointer-events-none translate-y-4 transition-all duration-400 origin-bottom">
-            <!-- Phone -->
             <a href="tel:0917790237" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
                 <svg class="w-4 h-4 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">0917 790 237</span>
             </a>
-
-            <!-- Zalo -->
             <a href="https://zalo.me/0917790237" target="_blank" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
                 <div class="text-gray-800 group-hover:text-chanel-gold transition-colors duration-300 font-bold text-[12px] tracking-tighter">Zalo</div>
                 <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">0917 790 237</span>
             </a>
-
-            <!-- Facebook -->
             <a href="#" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
                 <svg class="w-5 h-5 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.13 2 11.23c0 2.94 1.5 5.56 3.82 7.23v3.54l3.47-1.92c.86.24 1.76.37 2.71.37 5.52 0 10-4.13 10-9.23S17.52 2 12 2zm1.09 12.41l-2.82-3.02-5.51 3.02 6.06-6.43 2.91 3.02 5.41-3.02-6.05 6.43z"/></svg>
                 <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">Yến Nhi</span>
             </a>
-
-            <!-- Instagram -->
             <a href="#" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
                 <svg class="w-4 h-4 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.15-3.23 1.66-4.77 4.92-4.92 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07c-4.27.2-6.78 2.71-6.98 6.98C0 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.27 2.71 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c4.27-.2 6.78-2.71 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.27-2.71-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zm0 10.16A4 4 0 1116 12a4 4 0 01-4 4zm3.8-8.84a1.44 1.44 0 112.88 0 1.44 1.44 0 01-2.88 0z"/>
                 </svg>
                 <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">@ah.yeon_i</span>
             </a>
-
-            <!-- Telegram -->
             <a href="#" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
                 <svg class="w-5 h-5 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.89 8.24l-1.97 9.28c-.14.65-.54.81-1.08.51l-2.97-2.19-1.43 1.38c-.16.16-.29.29-.6.29l.21-3.03 5.52-4.98c.24-.22-.05-.34-.37-.13l-6.82 4.29-2.94-.92c-.64-.2-.65-.64.13-.95l11.47-4.42c.53-.2.99.12.85.88z"/></svg>
                 <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">@YenNhi_VIP</span>
             </a>
         </div>
         
-        <!-- Toggle Button for Social -->
+        <!-- Nút Tròn Nhỏ để Mở Danh Bạ -->
         <button onclick="toggleSocial()" id="socialBtn" class="w-12 h-12 bg-[#080808] border border-white/20 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hoverable z-50">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
         </button>
     </div>
 
-    <!-- Hero Section (Chữ NIINGX SỬ DỤNG FONT SERIF THEO YÊU CẦU MỚI NHẤT) -->
+    <!-- Hero Section (FONT CẬP NHẬT THEO YÊU CẦU MỚI: Playfair Display + Dấu Chấm) -->
     <section class="h-screen w-full flex items-center justify-center relative bg-chanel-light">
         <div class="absolute inset-0 img-reveal-wrapper">
             <img src="Tui xach Classic 11.12.jpg" class="w-full h-full object-cover mix-blend-darken opacity-30 scale-105" alt="Hero">
         </div>
-        <h1 class="relative z-10 text-center leading-none flex flex-col items-center justify-center" data-aos="fade-up" data-aos-delay="1500">
+        <h1 class="relative z-10 text-center flex flex-col items-center justify-center leading-none" data-aos="fade-up" data-aos-delay="1500">
             <span class="block font-serif italic font-light text-gray-800 text-4xl md:text-5xl lg:text-6xl mb-4">The Art of</span>
-            <!-- Dùng Playfair Display (font-serif), giãn chữ rộng (tracking-[0.15em]), nét dày vừa phải (font-medium) -->
-            <span class="block font-serif tracking-[0.15em] uppercase text-[4.5rem] md:text-[7rem] lg:text-[8.5rem] font-medium text-chanel-black ml-[0.15em]">NIINGX</span>
+            <div class="flex items-baseline justify-center">
+                <!-- Chữ dùng chung font serif, giãn chữ 0.15em -->
+                <span class="block font-serif tracking-[0.15em] uppercase text-[4rem] md:text-[6.5rem] lg:text-[8rem] font-medium text-chanel-black ml-[0.15em]">NIINGX</span>
+                <!-- Dấu chấm cách điệu -->
+                <span class="font-serif text-[2.5rem] md:text-[4.5rem] lg:text-[5.5rem] text-chanel-black ml-2 mb-2 md:mb-4 lg:mb-6">•</span>
+            </div>
         </h1>
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
             <div class="w-[1px] h-16 bg-black/20 overflow-hidden relative">
@@ -410,12 +479,12 @@
         <div class="flex flex-col lg:flex-row max-w-screen-2xl mx-auto">
             
             <!-- Sticky Image Left -->
-            <div class="w-full lg:w-1/2 lg:sticky lg:top-0 h-[50vh] lg:h-screen flex items-center justify-center bg-chanel-light p-10 lg:p-20 overflow-hidden">
-                <img id="bagPreview" src="Tui xach CHANEL 25 co Mini.jpg" class="w-full h-full object-contain mix-blend-darken transition-all duration-1000 transform scale-[1.25] translate-y-[5%] hover:scale-[1.35]" alt="Chanel Bag">
+            <div class="w-full lg:w-1/2 lg:sticky lg:top-0 h-[50vh] lg:h-screen flex items-center justify-center bg-chanel-light p-10 lg:p-20 overflow-hidden relative group">
+                <img id="bagPreview" src="Tui xach CHANEL 25 co Mini.jpg" class="w-full h-full object-contain mix-blend-darken transition-all duration-1000 transform scale-[1.25] translate-y-[5%] group-hover:scale-[1.35]" alt="Chanel Bag">
             </div>
 
             <!-- Scrolling Content Right -->
-            <div class="w-full lg:w-1/2 p-10 lg:p-24 xl:p-32 flex flex-col justify-center min-h-[70vh] lg:min-h-screen">
+            <div class="w-full lg:w-1/2 p-10 lg:p-24 xl:p-32 flex flex-col justify-center min-h-[70vh] lg:min-h-screen relative">
                 <div data-aos="fade-up">
                     <div class="flex items-center gap-4 mb-8">
                         <div class="w-10 h-[1px] bg-black/30"></div>
@@ -423,8 +492,10 @@
                     </div>
                     
                     <h3 class="font-serif text-4xl lg:text-[3.5rem] text-chanel-black mb-5 leading-[1.2] font-normal" id="bagTitle">Túi Xách Mini<br>Hồng Pastel</h3>
-                    <p class="text-xl lg:text-2xl font-serif italic text-gray-500 mb-10 tracking-widest font-light" id="bagPrice">145,000,000 VNĐ</p>
+                    <p class="text-xl lg:text-2xl font-serif italic text-gray-500 mb-6 tracking-widest font-light" id="bagPrice">145,000,000 VNĐ</p>
                     
+                    <button id="addHeroBtn" onclick="addToCart('Túi Xách Mini Hồng Pastel', 145000000, 'Tui xach CHANEL 25 co Mini.jpg')" class="hoverable mb-10 text-[10px] uppercase tracking-widest bg-black text-white px-8 py-4 hover:bg-chanel-gold transition-colors shadow-lg">Thêm Vào Giỏ Hàng</button>
+
                     <p class="text-[14px] leading-[2.2] text-gray-500 mb-14 font-light max-w-md" id="bagDescription">
                         Lớp da bóng mượt bắt sáng hoàn hảo ở mọi góc độ. Thiết kế miệng túi dây rút tinh tế tôn vinh trọn vẹn dải xích kim loại mạ vàng đan xen da, toát lên sự ngọt ngào và kiêu kỳ vô giá.
                     </p>
@@ -444,7 +515,7 @@
         </div>
     </section>
 
-    <!-- Asymmetric Grid Collection -->
+    <!-- Asymmetric Grid Collection (THÊM CHỨC NĂNG VÀ NÚT ADD TO CART) -->
     <section id="collection" class="py-24 lg:py-40 bg-chanel-black text-white">
         <div class="max-w-screen-2xl mx-auto px-6 lg:px-12">
             <div class="text-center mb-24 lg:mb-32" data-aos="fade-up">
@@ -455,71 +526,81 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24 lg:gap-y-32">
                 
                 <!-- 1. Nắp gập Max -->
-                <div class="group cursor-none hoverable" data-aos="fade-up" data-aos-delay="100">
-                    <div class="img-reveal-wrapper w-full aspect-[4/5] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative">
+                <div class="group hoverable" data-aos="fade-up" data-aos-delay="100">
+                    <div class="img-reveal-wrapper w-full aspect-[4/5] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative cursor-none">
                         <img src="Tui nap gap co max.jpg" class="w-full h-full object-contain scale-[1.9] translate-y-[8%] group-hover:scale-[1.6] transition-transform duration-1000 grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0">
                     </div>
                     <div class="flex justify-between items-end">
                         <div>
                             <p class="text-[9px] tracking-chanel-widest text-chanel-gold mb-2 uppercase font-medium">Thu Đông</p>
                             <h4 class="font-serif text-2xl mb-1 tracking-wide font-normal">Túi Nắp Gập Cỡ Max</h4>
-                            <p class="text-[12px] text-gray-500 font-light tracking-widest mt-1">295,000,000 VNĐ</p>
+                            <p class="text-[12px] text-gray-500 font-light tracking-widest mt-1">295,000,000đ</p>
                         </div>
-                        <span class="text-[10px] uppercase tracking-widest border-b border-white/20 pb-1 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0 font-medium">Chi tiết</span>
+                        <button onclick="addToCart('Nắp Gập Cỡ Max', 295000000, 'Tui nap gap co max.jpg')" class="text-[10px] uppercase tracking-widest border-b border-white/20 pb-1 hover:border-chanel-gold hover:text-chanel-gold transition-colors font-medium">Thêm Vào Giỏ</button>
                     </div>
                 </div>
 
-                <!-- 2. Túi shopping nhỏ (Tweed) -->
-                <div class="group cursor-none hoverable lg:mt-32" data-aos="fade-up" data-aos-delay="200">
-                    <div class="img-reveal-wrapper w-full aspect-[4/5] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative">
+                <!-- 2. Túi shopping nhỏ (Có Giảm Giá) -->
+                <div class="group hoverable lg:mt-32" data-aos="fade-up" data-aos-delay="200">
+                    <div class="img-reveal-wrapper w-full aspect-[4/5] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative cursor-none">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white text-[9px] px-2 py-1 uppercase tracking-widest z-10 font-bold shadow-lg">Sale</div>
                         <img src="bag-5.jpg" class="w-full h-full object-contain scale-[1.9] translate-y-[10%] translate-x-[5%] group-hover:scale-[1.6] transition-transform duration-1000 grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0">
                     </div>
                     <div class="flex justify-between items-end">
                         <div>
                             <p class="text-[9px] tracking-chanel-widest text-chanel-gold mb-2 uppercase font-medium">Tweed Kẻ Sọc</p>
                             <h4 class="font-serif text-2xl mb-1 tracking-wide font-normal">Túi Shopping Nhỏ</h4>
-                            <p class="text-[12px] text-gray-500 font-light tracking-widest mt-1">135,000,000 VNĐ</p>
+                            <p class="text-[10px] text-gray-500 font-light tracking-widest mt-1 line-through">135,000,000đ</p>
+                            <p class="text-[13px] text-red-500 font-medium tracking-widest mt-0.5">120,000,000đ</p>
                         </div>
-                        <span class="text-[10px] uppercase tracking-widest border-b border-white/20 pb-1 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0 font-medium">Chi tiết</span>
+                        <button onclick="addToCart('Túi Shopping Nhỏ', 120000000, 'bag-5.jpg')" class="text-[10px] uppercase tracking-widest border-b border-white/20 pb-1 hover:border-chanel-gold hover:text-chanel-gold transition-colors font-medium">Thêm Vào Giỏ</button>
                     </div>
                 </div>
 
                 <!-- 3. Xanh Đại Dương -->
-                <div class="group cursor-none hoverable" data-aos="fade-up" data-aos-delay="300">
-                    <div class="img-reveal-wrapper w-full aspect-[4/5] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative">
+                <div class="group hoverable" data-aos="fade-up" data-aos-delay="300">
+                    <div class="img-reveal-wrapper w-full aspect-[4/5] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative cursor-none">
                         <img src="tui shopping.jpg" class="w-full h-full object-contain scale-[1.8] translate-y-[8%] translate-x-[3%] group-hover:scale-[1.5] transition-transform duration-1000 grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0">
                     </div>
                     <div class="flex justify-between items-end">
                         <div>
                             <p class="text-[9px] tracking-chanel-widest text-chanel-gold mb-2 uppercase font-medium">Da Lộn</p>
                             <h4 class="font-serif text-2xl mb-1 tracking-wide font-normal">Túi Xanh Đại Dương</h4>
-                            <p class="text-[12px] text-gray-500 font-light tracking-widest mt-1">182,000,000 VNĐ</p>
+                            <p class="text-[12px] text-gray-500 font-light tracking-widest mt-1">182,000,000đ</p>
                         </div>
-                        <span class="text-[10px] uppercase tracking-widest border-b border-white/20 pb-1 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0 font-medium">Chi tiết</span>
+                        <button onclick="addToCart('Túi Xanh Đại Dương', 182000000, 'tui shopping.jpg')" class="text-[10px] uppercase tracking-widest border-b border-white/20 pb-1 hover:border-chanel-gold hover:text-chanel-gold transition-colors font-medium">Thêm Vào Giỏ</button>
                     </div>
                 </div>
 
                 <!-- 4. Túi Phom Tam Giác -->
-                <div class="group cursor-none hoverable lg:col-span-2" data-aos="fade-up">
-                    <div class="img-reveal-wrapper w-full aspect-[16/9] lg:aspect-[21/9] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative">
+                <div class="group hoverable lg:col-span-2" data-aos="fade-up">
+                    <div class="img-reveal-wrapper w-full aspect-[16/9] lg:aspect-[21/9] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative cursor-none">
                         <img src="Tui shopping co nho (3).jpg" class="w-full h-full object-contain scale-[1.6] translate-y-[5%] group-hover:scale-[1.3] transition-transform duration-1000 grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0">
                     </div>
-                    <div>
-                        <p class="text-[9px] tracking-chanel-widest text-chanel-gold mb-3 uppercase font-medium">Đương Đại</p>
-                        <h4 class="font-serif text-3xl lg:text-4xl mb-2 tracking-wide font-normal">Túi Phom Tam Giác</h4>
-                        <p class="text-[13px] text-gray-500 font-light tracking-widest">160,000,000 VNĐ</p>
+                    <div class="flex justify-between items-end pr-10">
+                        <div>
+                            <p class="text-[9px] tracking-chanel-widest text-chanel-gold mb-3 uppercase font-medium">Đương Đại</p>
+                            <h4 class="font-serif text-3xl lg:text-4xl mb-2 tracking-wide font-normal">Túi Phom Tam Giác</h4>
+                            <p class="text-[13px] text-gray-500 font-light tracking-widest">160,000,000đ</p>
+                        </div>
+                        <button onclick="addToCart('Túi Phom Tam Giác', 160000000, 'Tui shopping co nho (3).jpg')" class="text-[12px] uppercase tracking-widest border-b border-white/20 pb-1 hover:border-chanel-gold hover:text-chanel-gold transition-colors font-medium mb-2">Thêm Vào Giỏ Hàng</button>
                     </div>
                 </div>
 
-                <!-- 5. Túi Họa Tiết Báo -->
-                <div class="group cursor-none hoverable lg:mt-16" data-aos="fade-up">
-                    <div class="img-reveal-wrapper w-full aspect-[4/5] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative">
+                <!-- 5. Túi Họa Tiết Báo (Có giảm giá) -->
+                <div class="group hoverable lg:mt-16" data-aos="fade-up">
+                    <div class="img-reveal-wrapper w-full aspect-[4/5] bg-[#0c0c0c] mb-6 overflow-hidden flex items-center justify-center relative cursor-none">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white text-[9px] px-2 py-1 uppercase tracking-widest z-10 font-bold shadow-lg">Sale</div>
                         <img src="Tui nap gap co nho (4).jpg" class="w-full h-full object-contain scale-[1.9] translate-y-[8%] group-hover:scale-[1.5] transition-transform duration-1000 grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0">
                     </div>
-                    <div>
-                        <p class="text-[9px] tracking-chanel-widest text-chanel-gold mb-2 uppercase font-medium">Bản phối đặc biệt</p>
-                        <h4 class="font-serif text-2xl mb-1 tracking-wide font-normal">Túi Họa Tiết Báo</h4>
-                        <p class="text-[12px] text-gray-500 font-light tracking-widest mt-1">148,000,000 VNĐ</p>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <p class="text-[9px] tracking-chanel-widest text-chanel-gold mb-2 uppercase font-medium">Bản phối đặc biệt</p>
+                            <h4 class="font-serif text-2xl mb-1 tracking-wide font-normal">Túi Họa Tiết Báo</h4>
+                            <p class="text-[10px] text-gray-500 font-light tracking-widest mt-1 line-through">148,000,000đ</p>
+                            <p class="text-[13px] text-red-500 font-medium tracking-widest mt-0.5">130,000,000đ</p>
+                        </div>
+                        <button onclick="addToCart('Túi Họa Tiết Báo', 130000000, 'Tui nap gap co nho (4).jpg')" class="text-[10px] uppercase tracking-widest border-b border-white/20 pb-1 hover:border-chanel-gold hover:text-chanel-gold transition-colors font-medium">Thêm Vào Giỏ</button>
                     </div>
                 </div>
 
@@ -557,7 +638,7 @@
                     </div>
                 </div>
 
-                <!-- Cột 2: Địa chỉ & Map vuông -->
+                <!-- Cột 2: Địa chỉ & Map vuông (Đã fix lỗi kẹt chuột) -->
                 <div class="md:col-span-4 flex flex-col">
                     <h4 class="font-serif text-3xl italic text-chanel-gold mb-8 relative inline-block after:content-[''] after:w-8 after:h-[1px] after:bg-chanel-gold/50 after:absolute after:-bottom-3 after:left-0 font-light">Boutique</h4>
                     
@@ -568,11 +649,11 @@
                     </p>
                     
                     <div class="w-full max-w-[220px] aspect-square bg-[#111] p-1 border border-white/10 hoverable">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.5085382215277!2d106.7011984!3d10.7723145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f416d8208f7%3A0x6e36d4198466abdf!2sCHANEL!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-700"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.5085382215277!2d106.7011984!3d10.7723145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f416d8208f7%3A0x6e36d4198466abdf!2sCHANEL!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-700 pointer-events-auto"></iframe>
                     </div>
                 </div>
 
-                <!-- Cột 3: Form Lead Generation (ĐÃ ĐƯỢC CẬP NHẬT GOOGLE SCRIPT) -->
+                <!-- Cột 3: Form Lead Generation (GIỮ NGUYÊN SCRIPT GỐC) -->
                 <div class="md:col-span-5">
                     <div class="bg-[#0a0a0a] border border-white/10 p-8 lg:p-10 relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-8 h-[1px] bg-chanel-gold"></div>
@@ -585,7 +666,6 @@
                             Để lại thông tin để nhận tư vấn trực tiếp từ chuyên viên và cập nhật bộ sưu tập Haute Couture mới nhất dành riêng cho bạn.
                         </p>
                         
-                        <!-- Form tích hợp Gửi Data -->
                         <form id="vipForm" class="flex flex-col gap-6 hoverable">
                             <input type="text" name="name" placeholder="Họ và tên" required class="chanel-input text-[14px]">
                             <input type="tel" name="phone" placeholder="Số điện thoại" required class="chanel-input text-[14px]">
@@ -640,39 +720,37 @@
             }, 80);
         });
 
-        // 2. Custom Cursor
+        // 2. Custom Cursor & Hover Logic
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        const hoverables = document.querySelectorAll('.hoverable, button, a, input');
+        const hoverables = document.querySelectorAll('.hoverable, button, a, input, iframe');
         hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hidden'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hidden'));
         });
 
         // 3. Toggles Logic (Sidebar, Sale Bubble, Social Bubble)
         function closeAllSidebars() {
-            const sidebar = document.getElementById('sidebar');
-            const newsSidebar = document.getElementById('newsSidebar');
-            const overlay = document.getElementById('sidebarOverlay');
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('newsSidebar').classList.add('-translate-x-full');
+            document.getElementById('cartSidebar').classList.add('translate-x-full');
+            document.getElementById('saleSidebar').classList.add('translate-x-full');
             
-            sidebar.classList.add('-translate-x-full');
-            newsSidebar.classList.add('-translate-x-full');
+            const overlay = document.getElementById('sidebarOverlay');
             overlay.classList.add('opacity-0');
             setTimeout(() => overlay.classList.add('hidden'), 300);
         }
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const newsSidebar = document.getElementById('newsSidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            
             if (sidebar.classList.contains('-translate-x-full')) {
-                newsSidebar.classList.add('-translate-x-full');
+                closeAllSidebars();
                 sidebar.classList.remove('-translate-x-full');
+                const overlay = document.getElementById('sidebarOverlay');
                 overlay.classList.remove('hidden');
                 setTimeout(() => overlay.classList.remove('opacity-0'), 10);
             } else {
@@ -681,13 +759,37 @@
         }
 
         function toggleNewsSidebar() {
-            const sidebar = document.getElementById('sidebar');
             const newsSidebar = document.getElementById('newsSidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            
             if (newsSidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.add('-translate-x-full');
+                closeAllSidebars();
                 newsSidebar.classList.remove('-translate-x-full');
+                const overlay = document.getElementById('sidebarOverlay');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                closeAllSidebars();
+            }
+        }
+
+        function toggleCartSidebar() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            if (cartSidebar.classList.contains('translate-x-full')) {
+                closeAllSidebars();
+                cartSidebar.classList.remove('translate-x-full');
+                const overlay = document.getElementById('sidebarOverlay');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                closeAllSidebars();
+            }
+        }
+
+        function toggleSaleSidebar() {
+            const saleSidebar = document.getElementById('saleSidebar');
+            if (saleSidebar.classList.contains('translate-x-full')) {
+                closeAllSidebars();
+                saleSidebar.classList.remove('translate-x-full');
+                const overlay = document.getElementById('sidebarOverlay');
                 overlay.classList.remove('hidden');
                 setTimeout(() => overlay.classList.remove('opacity-0'), 10);
             } else {
@@ -791,32 +893,116 @@
                 preview.style.opacity = '1';
                 preview.style.transform = 'scale(1.25) translateY(5%)';
             }, 400);
+            
+            // Cập nhật nút mua hàng Hero
+            const addHeroBtn = document.getElementById('addHeroBtn');
+            addHeroBtn.setAttribute('onclick', `addToCart('${data.title.replace(/\n/g, ' ')}', ${data.price.replace(/\D/g, '')}, '${data.img}')`);
         }
 
-        // 6. Gửi Data Form về Google Sheet
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzW5k0BNSSHHv6gSiN-yHS6oO6b9UV51PTUINjQuyAk9BYkThRFytuwKdzsaBBDewXK/exec';
-        const form = document.getElementById('vipForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const formMessage = document.getElementById('formMessage');
+        // 6. GIỎ HÀNG (Cart Logic)
+        let cart = [];
+        const formatter = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
 
-        form.addEventListener('submit', e => {
+        function addToCart(title, price, img) {
+            cart.push({ title, price, img });
+            updateCartUI();
+            toggleCartSidebar(); // Tự động mở giỏ hàng khi thêm
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const countDisplay = document.getElementById('cartCountDisplay');
+            const totalDisplay = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const hiddenCartDetails = document.getElementById('hiddenCartDetails');
+
+            countDisplay.innerText = `(${cart.length})`;
+
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-gray-500 text-sm font-light italic text-center mt-10">Giỏ hàng đang trống.</p>`;
+                totalDisplay.innerText = '0đ';
+                checkoutBtn.disabled = true;
+                hiddenCartDetails.value = "";
+                return;
+            }
+
+            checkoutBtn.disabled = false;
+            let total = 0;
+            let html = '';
+            let cartDetailsStr = '';
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                cartDetailsStr += `${item.title} (${formatter.format(item.price)}); `;
+                
+                html += `
+                <div class="flex gap-4 items-center bg-white/5 p-3 rounded-sm">
+                    <img src="${item.img}" class="w-16 h-16 object-contain mix-blend-screen bg-chanel-light">
+                    <div class="flex-1">
+                        <h4 class="font-serif text-[13px] text-white leading-tight mb-1">${item.title}</h4>
+                        <p class="text-[11px] text-chanel-gold">${formatter.format(item.price)}</p>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-gray-500 hover:text-red-500 hoverable p-2">&times;</button>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+            totalDisplay.innerText = formatter.format(total);
+            hiddenCartDetails.value = cartDetailsStr; // Lưu list item để gửi kèm form
+        }
+
+        // 7. Gửi Data Form về Google Sheet (Lead & Cart Checkout)
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzW5k0BNSSHHv6gSiN-yHS6oO6b9UV51PTUINjQuyAk9BYkThRFytuwKdzsaBBDewXK/exec';
+        
+        // Xử lý Form VIP Footer
+        const vipForm = document.getElementById('vipForm');
+        const vipSubmitBtn = document.getElementById('submitBtn');
+        const vipFormMessage = document.getElementById('formMessage');
+
+        vipForm.addEventListener('submit', e => {
             e.preventDefault(); 
-            submitBtn.innerText = 'ĐANG GỬI...';
+            vipSubmitBtn.innerText = 'ĐANG GỬI...';
             
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            fetch(scriptURL, { method: 'POST', body: new FormData(vipForm)})
                 .then(response => {
-                    formMessage.classList.remove('hidden'); 
-                    submitBtn.innerText = 'NHẬN TƯ VẤN NGAY'; 
-                    form.reset(); 
-                    
-                    // Ẩn thông báo sau 5 giây
-                    setTimeout(() => {
-                        formMessage.classList.add('hidden');
-                    }, 5000);
+                    vipFormMessage.classList.remove('hidden'); 
+                    vipSubmitBtn.innerText = 'NHẬN TƯ VẤN NGAY'; 
+                    vipForm.reset(); 
+                    setTimeout(() => vipFormMessage.classList.add('hidden'), 5000);
                 })
                 .catch(error => {
-                    console.error('Lỗi!', error.message);
-                    submitBtn.innerText = 'LỖI! VUI LÒNG THỬ LẠI SAU';
+                    vipSubmitBtn.innerText = 'LỖI! THỬ LẠI SAU';
+                });
+        });
+
+        // Xử lý Form Đặt Hàng (Checkout)
+        const checkoutForm = document.getElementById('checkoutForm');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const checkoutMessage = document.getElementById('checkoutMessage');
+
+        checkoutForm.addEventListener('submit', e => {
+            e.preventDefault(); 
+            checkoutBtn.innerText = 'ĐANG XỬ LÝ...';
+            
+            fetch(scriptURL, { method: 'POST', body: new FormData(checkoutForm)})
+                .then(response => {
+                    checkoutMessage.classList.remove('hidden'); 
+                    checkoutBtn.innerText = 'XÁC NHẬN ĐẶT HÀNG'; 
+                    checkoutForm.reset(); 
+                    cart = []; // Xoá giỏ hàng sau khi đặt thành công
+                    updateCartUI();
+                    setTimeout(() => {
+                        checkoutMessage.classList.add('hidden');
+                        closeAllSidebars();
+                    }, 3000);
+                })
+                .catch(error => {
+                    checkoutBtn.innerText = 'LỖI! THỬ LẠI SAU';
                 });
         });
     </script>
