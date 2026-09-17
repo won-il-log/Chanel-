@@ -14,10 +14,10 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <!-- Fonts: Bodoni Moda (Zara Style), Playfair Display (Serif) & Montserrat (Sans-serif) -->
+    <!-- Fonts: Playfair Display (Serif) & Montserrat (Sans-serif) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700;6..96,800;6..96,900&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -35,7 +35,6 @@
                     fontFamily: {
                         sans: ['"Montserrat"', 'sans-serif'],
                         serif: ['"Playfair Display"', 'serif'],
-                        logo: ['"Bodoni Moda"', 'serif'],
                     },
                     letterSpacing: {
                         'chanel-wide': '0.15em',
@@ -53,6 +52,8 @@
             font-family: 'Montserrat', sans-serif;
             cursor: none; 
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Preloader */
@@ -167,90 +168,220 @@
     <!-- Custom Cursor -->
     <div class="cursor-dot hidden lg:block" id="cursor"></div>
 
+    <!-- Sidebar Overlay -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-[60] hidden opacity-0 transition-opacity duration-300 hoverable" onclick="closeAllSidebars()"></div>
+    
+    <!-- Sidebar: BỘ SƯU TẬP (Bags) -->
+    <aside id="sidebar" class="fixed top-0 left-0 w-[90vw] md:w-[450px] h-full bg-[#080808] z-[70] transform -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] overflow-y-auto border-r border-white/10">
+        <div class="p-8 flex justify-between items-center border-b border-white/10 sticky top-0 bg-[#080808]/95 backdrop-blur-md z-10">
+            <div>
+                <p class="text-[9px] tracking-chanel-widest text-chanel-gold uppercase font-light mb-1">Menu</p>
+                <span class="font-serif italic text-2xl text-white">Bộ Sưu Tập</span>
+            </div>
+            <button onclick="closeAllSidebars()" class="text-3xl text-gray-400 hover:text-white transition-colors hoverable font-light">&times;</button>
+        </div>
+        <div class="p-8 grid grid-cols-2 gap-6">
+            <!-- Item 1 -->
+            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
+                    <img src="Tui xach Classic 11.12.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100">
+                </div>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Classic 11.12</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider">310,000,000đ</p>
+            </div>
+            <!-- Item 2 -->
+            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
+                    <img src="Tui xach CHANEL 25 co Mini.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100">
+                </div>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Mini Hồng Pastel</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider">145,000,000đ</p>
+            </div>
+            <!-- Item 3 -->
+            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
+                    <img src="Tui nap gap co max.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+                </div>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Nắp Gập Cỡ Max</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider">295,000,000đ</p>
+            </div>
+            <!-- Item 4 -->
+            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
+                    <img src="bag-5.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+                </div>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Shopping Tweed</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider">135,000,000đ</p>
+            </div>
+            <!-- Item 5 -->
+            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
+                    <img src="Tui nap gap co mini.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+                </div>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Mini Lông Thú</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider">155,000,000đ</p>
+            </div>
+            <!-- Item 6 -->
+            <div class="group cursor-pointer hoverable flex flex-col items-center text-center">
+                <div class="w-full aspect-[4/5] bg-white/5 flex items-center justify-center mb-4 overflow-hidden rounded-sm">
+                    <img src="Tui nap gap co nho.jpg" class="w-[80%] h-[80%] object-contain mix-blend-screen group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+                </div>
+                <h4 class="font-serif text-[13px] text-gray-200 mb-1 leading-snug">Nắp Gập Đen</h4>
+                <p class="text-[9px] text-chanel-gold font-light tracking-wider">140,000,000đ</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Sidebar: TIN TỨC (News) -->
+    <aside id="newsSidebar" class="fixed top-0 left-0 w-[90vw] md:w-[450px] h-full bg-[#080808] z-[70] transform -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] overflow-y-auto border-r border-white/10">
+        <div class="p-8 flex justify-between items-center border-b border-white/10 sticky top-0 bg-[#080808]/95 backdrop-blur-md z-10">
+            <div>
+                <p class="text-[9px] tracking-chanel-widest text-chanel-gold uppercase font-light mb-1">Tin Tức</p>
+                <span class="font-serif italic text-2xl text-white">Chanel News</span>
+            </div>
+            <button onclick="closeAllSidebars()" class="text-3xl text-gray-400 hover:text-white transition-colors hoverable font-light">&times;</button>
+        </div>
+        <div class="p-8 flex flex-col gap-10">
+            <!-- News Item 1 -->
+            <div class="group cursor-pointer hoverable">
+                <div class="w-full aspect-[4/3] bg-white/5 mb-5 overflow-hidden rounded-sm">
+                    <img src="Tui xach Classic 11.12.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                </div>
+                <p class="text-[9px] text-chanel-gold uppercase tracking-widest mb-2 font-light">Sự Kiện</p>
+                <h4 class="font-serif text-xl text-gray-200 mb-3 leading-snug">Bộ Sưu Tập Mùa Xuân 2026 Tại Paris</h4>
+                <span class="text-[10px] uppercase tracking-widest text-gray-500 border-b border-white/20 pb-1 opacity-0 group-hover:opacity-100 transition-opacity font-medium">Đọc thêm</span>
+            </div>
+            <!-- News Item 2 -->
+            <div class="group cursor-pointer hoverable">
+                <div class="w-full aspect-[4/3] bg-white/5 mb-5 overflow-hidden rounded-sm">
+                    <img src="bag-5.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                </div>
+                <p class="text-[9px] text-chanel-gold uppercase tracking-widest mb-2 font-light">Chiến Dịch</p>
+                <h4 class="font-serif text-xl text-gray-200 mb-3 leading-snug">Khám Phá Kỹ Thuật Chế Tác Haute Couture</h4>
+                <span class="text-[10px] uppercase tracking-widest text-gray-500 border-b border-white/20 pb-1 opacity-0 group-hover:opacity-100 transition-opacity font-medium">Đọc thêm</span>
+            </div>
+        </div>
+    </aside>
+
     <!-- Navigation -->
     <header class="fixed top-0 w-full z-40 mix-blend-difference text-white p-6 lg:p-10 transition-all">
         <div class="max-w-screen-2xl mx-auto flex justify-between items-center">
-            <div class="text-[10px] tracking-chanel-widest uppercase hoverable opacity-70 hover:opacity-100 transition-opacity font-light">Khám phá</div>
+            
+            <!-- Left: Sidebar Triggers (Menu & Khám phá) -->
+            <div class="flex items-center gap-6 md:gap-8">
+                <div class="flex items-center gap-2 text-[10px] tracking-chanel-widest uppercase hoverable opacity-70 hover:opacity-100 transition-opacity font-light cursor-pointer" onclick="toggleSidebar()">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h8"></path></svg>
+                    <span class="hidden md:inline">Menu</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px] tracking-chanel-widest uppercase hoverable opacity-70 hover:opacity-100 transition-opacity font-light cursor-pointer" onclick="toggleNewsSidebar()">
+                    <span class="hidden md:inline">Khám phá</span>
+                </div>
+            </div>
+            
+            <!-- Center: Logo -->
             <a href="#" class="text-2xl lg:text-3xl font-serif tracking-[0.3em] uppercase hoverable font-medium">CHANEL</a>
-            <div class="text-[10px] tracking-chanel-widest uppercase hoverable opacity-70 hover:opacity-100 transition-opacity font-light">Menu</div>
+            
+            <!-- Right: Đặt ngay & Giỏ hàng -->
+            <div class="flex items-center gap-6 md:gap-8">
+                <button class="text-[9px] tracking-chanel-widest uppercase hoverable border border-white/40 hover:bg-white hover:text-black transition-all px-4 py-2 rounded-full font-medium">Đặt Ngay</button>
+                <div class="text-[10px] tracking-chanel-widest uppercase hoverable opacity-70 hover:opacity-100 transition-opacity font-light flex items-center gap-1.5 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span class="hidden md:inline">Giỏ hàng</span>
+                    <span class="text-[8px]">(0)</span>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- RIGHT FLOATING CONTACT BUBBLES -->
-    <div class="fixed right-5 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3.5">
+    <!-- LEFT BOTTOM HOTLINE BUBBLE (Toggled) -->
+    <div class="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-4">
         
-        <!-- Phone Bubble -->
-        <a href="tel:0917790237" class="group relative w-12 h-12 bg-white rounded-2xl floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
-            <svg class="w-5 h-5 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            <!-- Tooltip -->
-            <span class="absolute right-16 bg-chanel-black text-white text-[11px] py-2 px-3.5 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-wider font-light shadow-lg">0917 790 237</span>
-        </a>
-
-        <!-- Zalo Bubble -->
-        <a href="https://zalo.me/0917790237" target="_blank" class="group relative w-12 h-12 bg-white rounded-2xl floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
-            <div class="text-gray-800 group-hover:text-chanel-gold transition-colors duration-300 font-bold text-[14px] tracking-tighter">Zalo</div>
-            <!-- Tooltip -->
-            <span class="absolute right-16 bg-chanel-black text-white text-[11px] py-2 px-3.5 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-wider font-light shadow-lg">0917 790 237</span>
-        </a>
-
-        <!-- Messenger/Facebook Bubble -->
-        <a href="#" class="group relative w-12 h-12 bg-white rounded-2xl floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
-            <svg class="w-6 h-6 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.13 2 11.23c0 2.94 1.5 5.56 3.82 7.23v3.54l3.47-1.92c.86.24 1.76.37 2.71.37 5.52 0 10-4.13 10-9.23S17.52 2 12 2zm1.09 12.41l-2.82-3.02-5.51 3.02 6.06-6.43 2.91 3.02 5.41-3.02-6.05 6.43z"/></svg>
-            <!-- Tooltip -->
-            <span class="absolute right-16 bg-chanel-black text-white text-[11px] py-2 px-3.5 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-wider font-light shadow-lg">Yến Nhi</span>
-        </a>
-
-        <!-- Instagram Bubble -->
-        <a href="#" class="group relative w-12 h-12 bg-white rounded-2xl floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
-            <svg class="w-5 h-5 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.15-3.23 1.66-4.77 4.92-4.92 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07c-4.27.2-6.78 2.71-6.98 6.98C0 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.27 2.71 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c4.27-.2 6.78-2.71 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.27-2.71-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zm0 10.16A4 4 0 1116 12a4 4 0 01-4 4zm3.8-8.84a1.44 1.44 0 112.88 0 1.44 1.44 0 01-2.88 0z"/>
-            </svg>
-            <!-- Tooltip -->
-            <span class="absolute right-16 bg-chanel-black text-white text-[11px] py-2 px-3.5 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-wider font-light shadow-lg">@ah.yeon_i</span>
-        </a>
-
-        <!-- Telegram Bubble -->
-        <a href="#" class="group relative w-12 h-12 bg-white rounded-2xl floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
-            <svg class="w-6 h-6 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.89 8.24l-1.97 9.28c-.14.65-.54.81-1.08.51l-2.97-2.19-1.43 1.38c-.16.16-.29.29-.6.29l.21-3.03 5.52-4.98c.24-.22-.05-.34-.37-.13l-6.82 4.29-2.94-.92c-.64-.2-.65-.64.13-.95l11.47-4.42c.53-.2.99.12.85.88z"/></svg>
-            <!-- Tooltip -->
-            <span class="absolute right-16 bg-chanel-black text-white text-[11px] py-2 px-3.5 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-wider font-light shadow-lg">@YenNhi_VIP</span>
-        </a>
-    </div>
-
-    <!-- LEFT BOTTOM HOTLINE BUBBLE -->
-    <div class="fixed bottom-6 left-6 z-50 bg-[#080808]/95 backdrop-blur-md text-white p-4 rounded-xl w-[190px] border border-white/10 hoverable transition-transform hover:-translate-y-1 duration-300 shadow-2xl">
-        <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2.5">
-            <div class="flex items-center gap-2">
-                <span class="relative flex h-1.5 w-1.5">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-chanel-gold opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-chanel-gold"></span>
-                </span>
-                <p class="text-[9px] font-medium tracking-[0.2em] uppercase text-gray-300">Hotline</p>
+        <!-- Sale Panel (Hidden by default) -->
+        <div id="salePanel" class="bg-[#080808]/95 backdrop-blur-md text-white p-4 rounded-xl w-[190px] border border-white/10 shadow-2xl opacity-0 scale-95 pointer-events-none transition-all duration-300 origin-bottom-left">
+            <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2.5">
+                <div class="flex items-center gap-2">
+                    <span class="relative flex h-1.5 w-1.5">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-chanel-gold opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-chanel-gold"></span>
+                    </span>
+                    <p class="text-[9px] font-medium tracking-[0.2em] uppercase text-gray-300">Hotline</p>
+                </div>
+                <a href="tel:0917790237" class="text-[11px] font-sans tracking-widest hover:text-chanel-gold transition-colors font-light">0917 790 237</a>
             </div>
-            <a href="tel:0917790237" class="text-[11px] font-sans tracking-widest hover:text-chanel-gold transition-colors font-light">0917 790 237</a>
-        </div>
-        
-        <div class="text-center mb-3.5">
-            <p class="text-[8px] tracking-[0.2em] uppercase mb-1.5 text-gray-400 font-light">Flash Sale</p>
-            <div class="flex justify-center gap-1 font-serif text-[15px] tracking-widest text-white font-normal" id="countdown">
-                <span>02</span>:<span>45</span>:<span>30</span>
+            
+            <div class="text-center mb-3.5">
+                <p class="text-[8px] tracking-[0.2em] uppercase mb-1.5 text-gray-400 font-light">Flash Sale</p>
+                <div class="flex justify-center gap-1 font-serif text-[15px] tracking-widest text-white font-normal" id="countdown">
+                    <span>02</span>:<span>45</span>:<span>30</span>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-chanel-gold/10 to-red-900/20 border border-chanel-gold/20 text-white py-1.5 px-3 rounded uppercase w-full flex justify-between items-center group cursor-pointer hoverable" onclick="document.getElementById('random-code').innerText='COPIED!'">
+                <span class="text-gray-400 text-[8px] tracking-wider">Mã Sale:</span>
+                <span id="random-code" class="text-chanel-gold font-medium text-[10px] tracking-widest">...</span>
             </div>
         </div>
-        
-        <div class="bg-gradient-to-r from-chanel-gold/10 to-red-900/20 border border-chanel-gold/20 text-white py-1.5 px-3 rounded uppercase w-full flex justify-between items-center group">
-            <span class="text-gray-400 text-[8px] tracking-wider">Mã Sale:</span>
-            <span id="random-code" class="text-chanel-gold font-medium text-[10px] tracking-widest">...</span>
-        </div>
+
+        <!-- Toggle Button for Sale -->
+        <button onclick="toggleSale()" class="w-12 h-12 bg-[#080808] border border-white/20 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-chanel-gold hover:border-chanel-gold hover:text-black transition-all duration-300 hoverable group relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-chanel-gold opacity-30 group-hover:opacity-0"></span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </button>
     </div>
 
-    <!-- Hero Section -->
+    <!-- RIGHT BOTTOM SOCIAL BUBBLE (Toggled) -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+        
+        <!-- Social Panel (Hidden by default) -->
+        <div id="socialPanel" class="flex flex-col gap-3 opacity-0 scale-95 pointer-events-none translate-y-4 transition-all duration-400 origin-bottom">
+            <!-- Phone -->
+            <a href="tel:0917790237" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
+                <svg class="w-4 h-4 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">0917 790 237</span>
+            </a>
+
+            <!-- Zalo -->
+            <a href="https://zalo.me/0917790237" target="_blank" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
+                <div class="text-gray-800 group-hover:text-chanel-gold transition-colors duration-300 font-bold text-[12px] tracking-tighter">Zalo</div>
+                <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">0917 790 237</span>
+            </a>
+
+            <!-- Facebook -->
+            <a href="#" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
+                <svg class="w-5 h-5 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.13 2 11.23c0 2.94 1.5 5.56 3.82 7.23v3.54l3.47-1.92c.86.24 1.76.37 2.71.37 5.52 0 10-4.13 10-9.23S17.52 2 12 2zm1.09 12.41l-2.82-3.02-5.51 3.02 6.06-6.43 2.91 3.02 5.41-3.02-6.05 6.43z"/></svg>
+                <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">Yến Nhi</span>
+            </a>
+
+            <!-- Instagram -->
+            <a href="#" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
+                <svg class="w-4 h-4 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.15-3.23 1.66-4.77 4.92-4.92 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07c-4.27.2-6.78 2.71-6.98 6.98C0 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.27 2.71 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c4.27-.2 6.78-2.71 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.27-2.71-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zm0 10.16A4 4 0 1116 12a4 4 0 01-4 4zm3.8-8.84a1.44 1.44 0 112.88 0 1.44 1.44 0 01-2.88 0z"/>
+                </svg>
+                <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">@ah.yeon_i</span>
+            </a>
+
+            <!-- Telegram -->
+            <a href="#" class="group relative w-11 h-11 bg-white rounded-full floating-shadow flex items-center justify-center hover:scale-110 transition-all duration-300 hoverable">
+                <svg class="w-5 h-5 text-gray-800 group-hover:text-chanel-gold transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.89 8.24l-1.97 9.28c-.14.65-.54.81-1.08.51l-2.97-2.19-1.43 1.38c-.16.16-.29.29-.6.29l.21-3.03 5.52-4.98c.24-.22-.05-.34-.37-.13l-6.82 4.29-2.94-.92c-.64-.2-.65-.64.13-.95l11.47-4.42c.53-.2.99.12.85.88z"/></svg>
+                <span class="absolute right-14 bg-chanel-black text-white text-[10px] py-1.5 px-3 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-sans tracking-widest font-light shadow-lg">@YenNhi_VIP</span>
+            </a>
+        </div>
+        
+        <!-- Toggle Button for Social -->
+        <button onclick="toggleSocial()" id="socialBtn" class="w-12 h-12 bg-[#080808] border border-white/20 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hoverable z-50">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+        </button>
+    </div>
+
+    <!-- Hero Section (Chữ NIINGX SỬ DỤNG FONT SERIF THEO YÊU CẦU MỚI NHẤT) -->
     <section class="h-screen w-full flex items-center justify-center relative bg-chanel-light">
         <div class="absolute inset-0 img-reveal-wrapper">
             <img src="Tui xach Classic 11.12.jpg" class="w-full h-full object-cover mix-blend-darken opacity-30 scale-105" alt="Hero">
         </div>
-        <h1 class="relative z-10 text-center flex flex-col items-center justify-center leading-none" data-aos="fade-up" data-aos-delay="1500">
-            <span class="block font-serif italic font-light text-gray-700 text-4xl md:text-5xl lg:text-6xl mb-4">The Art of</span>
-            <span class="block font-serif tracking-[0.15em] uppercase text-[4.5rem] md:text-[7rem] lg:text-[8.5rem] font-normal text-chanel-black ml-[0.15em]">NIINGX</span>
+        <h1 class="relative z-10 text-center leading-none flex flex-col items-center justify-center" data-aos="fade-up" data-aos-delay="1500">
+            <span class="block font-serif italic font-light text-gray-800 text-4xl md:text-5xl lg:text-6xl mb-4">The Art of</span>
+            <!-- Dùng Playfair Display (font-serif), giãn chữ rộng (tracking-[0.15em]), nét dày vừa phải (font-medium) -->
+            <span class="block font-serif tracking-[0.15em] uppercase text-[4.5rem] md:text-[7rem] lg:text-[8.5rem] font-medium text-chanel-black ml-[0.15em]">NIINGX</span>
         </h1>
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
             <div class="w-[1px] h-16 bg-black/20 overflow-hidden relative">
@@ -441,7 +572,7 @@
                     </div>
                 </div>
 
-                <!-- Cột 3: Form Lead Generation -->
+                <!-- Cột 3: Form Lead Generation (ĐÃ ĐƯỢC CẬP NHẬT GOOGLE SCRIPT) -->
                 <div class="md:col-span-5">
                     <div class="bg-[#0a0a0a] border border-white/10 p-8 lg:p-10 relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-8 h-[1px] bg-chanel-gold"></div>
@@ -522,7 +653,70 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
-        // 3. Hotline Countdown & Random Sale Code
+        // 3. Toggles Logic (Sidebar, Sale Bubble, Social Bubble)
+        function closeAllSidebars() {
+            const sidebar = document.getElementById('sidebar');
+            const newsSidebar = document.getElementById('newsSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.add('-translate-x-full');
+            newsSidebar.classList.add('-translate-x-full');
+            overlay.classList.add('opacity-0');
+            setTimeout(() => overlay.classList.add('hidden'), 300);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const newsSidebar = document.getElementById('newsSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                newsSidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                closeAllSidebars();
+            }
+        }
+
+        function toggleNewsSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const newsSidebar = document.getElementById('newsSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (newsSidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.add('-translate-x-full');
+                newsSidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                closeAllSidebars();
+            }
+        }
+
+        function toggleSale() {
+            const panel = document.getElementById('salePanel');
+            if (panel.classList.contains('opacity-0')) {
+                panel.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+            } else {
+                panel.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+            }
+        }
+
+        function toggleSocial() {
+            const panel = document.getElementById('socialPanel');
+            const btn = document.getElementById('socialBtn');
+            if (panel.classList.contains('opacity-0')) {
+                panel.classList.remove('opacity-0', 'scale-95', 'pointer-events-none', 'translate-y-4');
+                btn.classList.add('bg-white', 'text-black');
+            } else {
+                panel.classList.add('opacity-0', 'scale-95', 'pointer-events-none', 'translate-y-4');
+                btn.classList.remove('bg-white', 'text-black');
+            }
+        }
+
+        // 4. Hotline Countdown
         const countdownEl = document.getElementById('countdown');
         let timeInSecs = 2 * 3600 + 45 * 60 + 30; // 2h 45m 30s
         
@@ -538,7 +732,7 @@
         const randomCode = saleCodes[Math.floor(Math.random() * saleCodes.length)];
         document.getElementById('random-code').innerText = randomCode;
 
-        // 4. Product Data & Interactive Script
+        // 5. Product Data & Interactive Script
         const focusData = {
             pinkmini: {
                 title: "Túi Xách Mini\nHồng Pastel",
@@ -599,7 +793,7 @@
             }, 400);
         }
 
-        // 5. Gửi Data Form về Google Sheet
+        // 6. Gửi Data Form về Google Sheet
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzW5k0BNSSHHv6gSiN-yHS6oO6b9UV51PTUINjQuyAk9BYkThRFytuwKdzsaBBDewXK/exec';
         const form = document.getElementById('vipForm');
         const submitBtn = document.getElementById('submitBtn');
